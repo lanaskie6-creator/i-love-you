@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Universe - Nana ❤️</title>
+    <title>For you mylovee!! 🤍</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         :root { --pink: #ff69b4; --space: #050505; }
@@ -18,7 +18,7 @@
             perspective: 1000px;
         }
 
-        /* Background Bintang Bergerak */
+        /* Background Bintang */
         #stars-container {
             position: fixed; inset: 0;
             background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
@@ -40,80 +40,86 @@
             z-index: 999; padding: 15px 30px; border-radius: 50px;
             background: var(--pink); border: none; color: white;
             font-weight: bold; cursor: pointer; box-shadow: 0 0 20px var(--pink);
+            transition: 0.3s;
         }
+        #btn-start:hover { transform: translate(-50%, -50%) scale(1.1); }
 
-        /* Container Galeri Melayang */
+        /* Container Galeri */
         #universe {
             display: none; width: 100%; height: 100%;
             position: relative; overflow-y: auto; overflow-x: hidden;
             scroll-behavior: smooth;
+            opacity: 0;
+        }
+
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         .space-text {
             text-align: center; margin-top: 100px; font-family: 'Pacifico';
-            font-size: 2rem; color: var(--pink); text-shadow: 0 0 10px var(--pink);
+            font-size: 2.5rem; color: var(--pink); text-shadow: 0 0 15px var(--pink);
         }
 
-        /* Galeri Foto Berjejer */
         .gallery {
             display: flex; flex-direction: column; align-items: center;
             gap: 150px; padding: 100px 0;
         }
 
         .photo-frame {
-            width: 250px; height: 350px; background: rgba(255,255,255,0.1);
+            width: 280px; background: rgba(255,255,255,0.1);
             border: 2px solid var(--pink); border-radius: 15px;
             overflow: hidden; backdrop-filter: blur(5px);
-            transform-style: preserve-3d; transition: 0.5s;
+            transition: 0.5s ease-out;
             box-shadow: 0 0 30px rgba(255,105,180,0.3);
         }
 
-        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-frame img { width: 100%; height: 350px; object-fit: cover; }
+        .caption { padding: 15px; text-align: center; font-size: 1rem; font-weight: bold; }
 
-        .caption { padding: 10px; text-align: center; font-size: 0.9rem; }
-
-        /* Audio Player Tersembunyi */
+        /* Audio Player */
         #lagu { display: none; }
     </style>
 </head>
 <body>
 
     <div id="stars-container"></div>
-    <button id="btn-start" onclick="mulaiUniverse()">Masuk ke Universe Nana ❤️</button>
+    
+    <button id="btn-start" onclick="mulaiUniverse()">For youu mylovee!! </button>
 
     <audio id="lagu" loop>
-        <source src="ssstik.io_1775638977142.mp3" type="audio/mpeg">
+        <source src="ssstik.io_1775658135369.mp3" type="audio/mpeg">
     </audio>
 
     <div id="universe">
         <div class="space-text">You are my whole Universe...</div>
         
         <div class="gallery">
-            <!-- Ganti Nama File Foto di Sini -->
             <div class="photo-frame" style="transform: rotate(-5deg)">
-                <img src="IMG-20260405-WA0045.jpg">
-                <div class="caption">Cantiknya duniaku ❤️</div>
+                <img src="IMG-20260324-WA0087.jpg" alt="Foto 1">
+                <div class="caption">Prettyy like a sunset🤍</div>
             </div>
 
             <div class="photo-frame" style="transform: rotate(5deg)">
-                <img src="IMG-20260320-WA0065.jpg">
+                <img src="IMG-20260324-WA0086.jpg" alt="Foto 2">
                 <div class="caption">My Favorite Star ✨</div>
             </div>
 
             <div class="photo-frame" style="transform: rotate(-3deg)">
-                <img src="IMG-20260321-WA0007.jpg">
-                <div class="caption">Semesta bersamamu... 🌸</div>
+                <img src="IMG-20260405-WA0038.jpg" alt="Foto 3">
+                <div class="caption">Lucukuu Manisskuu💗🤍</div>
             </div>
 
             <div class="photo-frame">
-                <img src="IMG-20260314-WA0004.jpg">
+                <img src="IMG-20260405-WA0042.jpg" alt="Foto 4">
                 <div class="caption">I Love You to the moon and back! 🌙</div>
             </div>
         </div>
     </div>
 
     <script>
-        // Bikin Bintang Otomatis
+        // Efek Bintang
         const starsCount = 150;
         const container = document.getElementById('stars-container');
         for (let i = 0; i < starsCount; i++) {
@@ -129,29 +135,38 @@
             container.appendChild(star);
         }
 
+        // Fungsi Masuk Universe & Play Musik
         function mulaiUniverse() {
-            document.getElementById('btn-start').style.display = 'none';
-            document.getElementById('lagu').play();
+            const lagu = document.getElementById('lagu');
+            const btn = document.getElementById('btn-start');
             const uni = document.getElementById('universe');
+
+            // Sembunyikan tombol & munculkan konten
+            btn.style.display = 'none';
             uni.style.display = 'block';
+            uni.style.animation = 'zoomIn 1.5s forwards';
             
-            // Efek Zoom In saat masuk
-            uni.style.animation = 'zoomIn 2s forwards';
+            // Mengatasi kebijakan autoplay browser
+            lagu.play().catch(error => {
+                console.log("Autoplay dicegah, mencoba alternatif...");
+                // Jika gagal, musik akan jalan saat user scroll atau klik area lain
+                document.addEventListener('click', () => { lagu.play(); }, { once: true });
+            });
         }
 
-        // Efek gerak foto saat scroll (Parallax)
+        // Efek Parallax Scroll
         const universe = document.getElementById('universe');
         universe.addEventListener('scroll', () => {
             const frames = document.querySelectorAll('.photo-frame');
             frames.forEach((frame, i) => {
-                const speed = (i + 1) * 0.1;
                 const rect = frame.getBoundingClientRect();
                 if(rect.top < window.innerHeight && rect.bottom > 0) {
-                    frame.style.transform = `translateY(${rect.top * speed}px) rotate(${i % 2 === 0 ? -5 : 5}deg)`;
+                    const shift = rect.top * 0.1;
+                    const rotation = i % 2 === 0 ? -5 : 5;
+                    frame.style.transform = `translateY(${shift}px) rotate(${rotation}deg)`;
                 }
             });
         });
     </script>
 </body>
 </html>
-
